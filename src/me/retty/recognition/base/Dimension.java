@@ -69,4 +69,16 @@ public class Dimension<T> {
     public int getHeight() {
         return this.height;
     }
+
+    @Override
+    public String toString() {
+        String res = "Dimension (" + this.width + " x " + this.height + ") [";
+        for (int i=0; i<height; i++) {
+            for (int j=0; j<width; j++) {
+                res += this.data[i][j] + (i < width-1 ? ", " : "");
+            }
+            res += "¥n" + (i < height-1 ? "" : "]");
+        }
+        return res;
+    }
 }
