@@ -31,7 +31,7 @@ public class ImageReader {
         }
     }
 
-    public static Optional<Map<String, List<BufferedImage>>> readLearnImages(String learnImageDirPath) {
+    public static Optional<Map<String, List<BufferedImage>>> readLearnImages(String learnImageDirPath, boolean grayScale, int width, int height) {
         File file = new File(learnImageDirPath);
         if (!file.exists() || !file.isDirectory()) {
             return Optional.ofNullable(null);
@@ -47,13 +47,26 @@ public class ImageReader {
                 List<BufferedImage> images = new ArrayList<>();
                 String name = p.getName();
                 File[] imageFiles = p.listFiles();
-                Arrays.stream(imageFiles).forEach(i -> {
-                    ImageReader.readImage(i).ifPresent(bi -> images.add((BufferedImage) bi));
+                Arrays.stream(imageFiles).forEach(image -> {
+                    ImageReader.readImage(image).ifPresent(bi -> {
+                        BufferedImage i = (BufferedImage) bi;
+                        if (width > 0 && height > 0) {
+                            i = ImageUtility.resizeImage(i, width, height);
+                        }
+                        if (grayScale) {
+                            i = ImageUtility.grayScale(i);
+                        }
+                        images.add(i);
+                    });
                 });
                 res.put(name, images);
             });
-            res.forEach((key, value) -> System.out.println(key + " : " + value.size()));
             return Optional.of(res);
         }
+    }
+
+
+    public static Optional<Map<String, List<BufferedImage>>> readLearnImages(String learnImageDirPath, boolean grayScale) {
+        return ImageReader.readLearnImages(learnImageDirPath, grayScale, -1, -1);
     }
 }

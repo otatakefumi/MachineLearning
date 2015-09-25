@@ -10,13 +10,13 @@ import java.util.Map;
  * Created by takefumiota on 2015/09/22.
  * Base infterfaces for pattern recognition
  */
-public interface IRecognition<T> {
+public interface IRecognition<T extends Number> {
     /**
      * start learning for recognition
      * @param learningData list of learning data
      * @return own self(type: ? implements IRecognition)
      */
-    public IRecognition startLearning(Map<String,List<Dimension<T>>> learningData);
+    public IRecognition startLearning(Map<String,List<String>> learningFiles);
 
     /**
      * Execute recognition

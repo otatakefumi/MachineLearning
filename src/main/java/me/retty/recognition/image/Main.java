@@ -1,32 +1,56 @@
 package me.retty.recognition.image;
 
-import me.retty.recognition.image.util.ImageReader;
-import me.retty.recognition.image.util.ImageUtility;
+import me.retty.recognition.algorithms.NearestNeighbor;
+import me.retty.recognition.base.DimensionReader;
+import me.retty.recognition.base.FileUtility;
+import me.retty.recognition.base.Result;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
-    public static String IMAGE_BASE_DIR = "/Users/takefumiota/work/machine_learning/data/";
-    public static String LEARN_IMAGE_DIR = "learn/";
-    public static String TEST_IMAGE_DIR = "test/";
+    public static String DATA_BASE_DIR = "/Users/takefumiota/work/machine_learning/data/";
+    public static String LEARN_DATA_DIR = "learn_gray";
+    public static String TEST_DATA_DIR = "test_gray";
+    public static int WIDTH = 300;
+    public static int HEIGHT = 300;
 
     public static void main(String[] args) {
-//        Optional<BufferedImage> op = ImageReader.readImage("/Users/takefumiota/work/machine_learning/data/learn/1/100001.jpg");
-//        op.ifPresent(s -> {
-//            System.out.println(s);
-//            System.out.println(s.getRGB(0, 0));
-//            System.out.println(ImageUtility.r(s.getRGB(0, 0)));
-//            System.out.println(ImageUtility.g(s.getRGB(0, 0)));
-//            System.out.println(ImageUtility.b(s.getRGB(0, 0)));
-//            System.out.println(ImageUtility.r(ImageUtility.grayScale(s).getRGB(0, 0)));
-//            System.out.println(ImageUtility.g(ImageUtility.grayScale(s).getRGB(0, 0)));
-//            System.out.println(ImageUtility.b(ImageUtility.grayScale(s).getRGB(0, 0)));
-//        });
-        System.out.println("Read Learning Files");
-        ImageReader.readLearnImages(IMAGE_BASE_DIR + LEARN_IMAGE_DIR);
+        Optional<Map<String, List<String>>> learningFilesOpt = FileUtility.getPatternFilePathMap(DATA_BASE_DIR + LEARN_DATA_DIR);
+        NearestNeighbor nn = new NearestNeighbor();
+
+        if (learningFilesOpt.isPresent()) {
+            System.out.println("finish to get studying data files list");
+            nn.startLearning(learningFilesOpt.get());
+        } else {
+            System.err.println("error to get learning data files list");
+            System.exit(1);
+        }
+
+        Optional<Map<String, List<String>>> testingFilesOpt = FileUtility.getPatternFilePathMap(DATA_BASE_DIR + TEST_DATA_DIR);
+        if (testingFilesOpt.isPresent()) {
+            System.out.println("finish to get testing data files list");
+            Map<String, List<String>> testingFilesMap = testingFilesOpt.get();
+
+            System.out.println("Start recognition");
+            List<Result> results = new ArrayList<>();
+            for (String key: testingFilesMap.keySet()) {
+                for (String path: testingFilesMap.get(key)) {
+                    DimensionReader.readDimension(path).ifPresent(dim -> {
+                        results.add(nn.exec(dim).setAnswer(key));
+                    });
+                }
+            }
+            System.out.println("Finish recognition");
+
+            int correctCount = results.stream()
+                    .filter(result -> result.isCorrect())
+                    .collect(Collectors.toList()).size();
+            System.out.println(correctCount);
+            System.out.println((((double)correctCount) / results.size() * 100) + "%");
+        } else {
+            System.err.println("error to get testing data files list");
+            System.exit(1);
+        }
     }
 }

@@ -4,7 +4,7 @@ package me.retty.recognition.base;
  * Created by takefumiota on 2015/09/22.
  * Indicate dimension vector that used for pattern recognition(input, weight, and so on)
  */
-public class Dimension<T> {
+public class Dimension<T extends Number> {
     /**
      * width and height of this dimension
      */
@@ -29,6 +29,11 @@ public class Dimension<T> {
         this.width = width;
         this.height = height;
         this.data = new Object[height][width];
+        for (int i=0; i<height; i++) {
+            for (int j=0; j<width; j++) {
+                this.data[i][j] = 0;
+            }
+        }
     }
 
     /**
@@ -40,6 +45,17 @@ public class Dimension<T> {
     @SuppressWarnings("unchecked")
     public T getValue(int x, int y) {
         return (T)this.data[y][x];
+    }
+
+    /**
+     * get double type value of this dimension
+     * @param x x-axis of value
+     * @param y y-axis of value
+     * @return value of this dimension(type: T)
+     */
+    @SuppressWarnings("unchecked")
+    public double getDoubleValue(int x, int y) {
+        return this.getValue(x, y).doubleValue();
     }
 
     /**
@@ -72,12 +88,13 @@ public class Dimension<T> {
 
     @Override
     public String toString() {
-        String res = "Dimension (" + this.width + " x " + this.height + ") [";
+        String res = "Dimension (" + this.width + " x " + this.height + ") [\n";
         for (int i=0; i<height; i++) {
+            res += "   ";
             for (int j=0; j<width; j++) {
-                res += this.data[i][j] + (i < width-1 ? ", " : "");
+                res += this.data[i][j] + (j < width-1 ? ", " : "");
             }
-            res += "¥n" + (i < height-1 ? "" : "]");
+            res += "\n" + (i < height-1 ? "" : "]");
         }
         return res;
     }
