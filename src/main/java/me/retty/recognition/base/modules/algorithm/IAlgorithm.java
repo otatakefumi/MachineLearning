@@ -17,7 +17,7 @@ public interface IAlgorithm<T> {
     /**
      * Execute recognition
      * @param config configure to indicate target data
-     * @return Result
+     * @return result of recognition
      */
     IOutput<T> recognize(Config config);
 
