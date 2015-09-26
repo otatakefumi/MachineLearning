@@ -6,7 +6,7 @@ import me.retty.recognition.base.modules.output.IOutput;
 /**
  * Created by takefumiota on 2015/09/27.
  */
-public interface IAlgorithm {
+public interface IAlgorithm<T> {
     /**
      * start learning for recognition
      * @param config configure to indicate input data
@@ -19,6 +19,7 @@ public interface IAlgorithm {
      * @param config configure to indicate target data
      * @return Result
      */
-    IOutput recognize(Config config);
+    IOutput<T> recognize(Config config);
 
+    void verify(Config config);
 }

@@ -16,4 +16,14 @@ public abstract class AbstractOutput<T> implements IOutput {
     public boolean isCorrect() {
         return result.equals(answer);
     }
+
+    @Override
+    public T getResult() {
+        return this.result;
+    }
+
+    @Override
+    public T getAnswer() {
+        return this.answer;
+    }
 }
