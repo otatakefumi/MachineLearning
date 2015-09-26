@@ -41,7 +41,7 @@ public class Results<T> {
 
         System.out.println("[Result]");
         System.out.println("total input num: " + this.resultList.size());
-        System.out.println("total correct num: " + correctCount);
+        System.out.println("total correct num: " + correctCount[0]);
         System.out.println("total correct percentage: " + (((double) correctCount[0]) / this.resultList.size() * 100) + "%");
         System.out.println("-----------------");
         resultMap.keySet().forEach(key -> {

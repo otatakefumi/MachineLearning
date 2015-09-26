@@ -16,6 +16,6 @@ public class FileUtilityTest extends TestCase {
         Optional<Map<String, List<String>>> patternFilePathMapOpt = FileUtility.getPatternFilePathMap(DATA_BASE_DIR);
         assertTrue(patternFilePathMapOpt.isPresent());
         assertEquals(patternFilePathMapOpt.get().size(), 1);
-        assertEquals(patternFilePathMapOpt.get().get("1").size(), 1);
+        assertEquals(patternFilePathMapOpt.get().get("1").size(), 2);
     }
 }

@@ -1,19 +1,19 @@
 package me.retty.recognition.algorithms;
 
-import me.retty.recognition.base.*;
-import me.retty.recognition.base.interfaces.IRecognition;
+import javafx.util.Pair;
+import me.retty.recognition.base.Dimension;
+import me.retty.recognition.base.modules.algorithm.AbstractDimensionClassifyAlgorithm;
+import me.retty.recognition.base.modules.input.IInput;
+import me.retty.recognition.base.modules.output.IOutput;
+import me.retty.recognition.base.modules.output.SimpleOutput;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
- * Created by takefumiota on 2015/09/22.
- * Algorithm: Nearest Neighbor (Using prototype)
- * for prototype, use mean value
+ * Created by takefumiota on 2015/09/27.
  */
-public class NearestNeighbor extends AbstractRecognition<Double>{
+public class NearestNeighbor extends AbstractDimensionClassifyAlgorithm {
     private Map<String, Dimension<Double>> prototypes;
 
     public NearestNeighbor() {
@@ -21,57 +21,54 @@ public class NearestNeighbor extends AbstractRecognition<Double>{
     }
 
     @Override
-    public IRecognition startLearning(Map<String, List<String>> learningFiles) {
+    protected void doLearn(IInput<Dimension<Double>> input) {
         System.out.println("Start to make prototype");
-        for (String key: learningFiles.keySet()) {
-            Optional<Dimension<Double>> dimOpt = DimensionReader.readDimension(learningFiles.get(key).get(0));
-            if (!dimOpt.isPresent()) {
-                System.err.println("fail to read");
-                continue;
+        Map<String, Integer> classCountMap = new HashMap<>();
+        while (input.hasNext()) {
+            Pair<String, Dimension<Double>> data = input.get();
+            String key = data.getKey();
+            Dimension<Double> dim = data.getValue();
+            int width = dim.getWidth();
+            int height = dim.getHeight();
+            if (!this.prototypes.containsKey(key)) {
+                this.prototypes.put(key, new Dimension<>(width, height));
+                classCountMap.put(key, 0);
             }
-            int width = dimOpt.get().getWidth();
-            int height = dimOpt.get().getHeight();
-            int[] count = {0};
-            Dimension<Double> prototype = new Dimension<>(width, height);
-            for (String path: learningFiles.get(key)) {
-                DimensionReader.readDimension(path).ifPresent(dim -> {
-                    System.out.println(path);
-                    for (int i = 0; i < height; i++) {
-                        for (int j = 0; j < width; j++) {
-                            prototype.setData(j, i, prototype.getValue(j, i) + dim.getValue(j, i));
-                        }
-                    }
-                    count[0]++;
-                });
-            }
+            classCountMap.put(key, classCountMap.get(key) + 1);
+            Dimension<Double> prototype = this.prototypes.get(key);
             for (int i=0; i<height; i++) {
                 for (int j=0; j<width; j++) {
-                    prototype.setData(j, i, prototype.getValue(j, i) / count[0]);
+                    prototype.setData(j, i, prototype.getDoubleValue(j, i) + dim.getDoubleValue(j, i));
                 }
             }
-            this.prototypes.put(key, prototype);
         }
-        System.out.println("Finish to make prototype");
-        return this;
+        System.out.println("Standardize each prototypes");
+        for (String key: this.prototypes.keySet()) {
+            Dimension<Double> prototype = this.prototypes.get(key);
+            int width = prototype.getWidth();
+            int height = prototype.getHeight();
+            int count = classCountMap.get(key);
+            for (int i=0; i<height; i++) {
+                for (int j=0; j<width; j++) {
+                    prototype.setData(j, i, prototype.getDoubleValue(j, i) / count);
+                }
+            }
+        }
+        System.out.println("finish to make prototype");
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Result exec(Dimension<Double> pattern) {
+    protected IOutput<String> doRecognize(Pair<String, Dimension<Double>> input) {
         double min = Double.MAX_VALUE;
         String minKey = "";
         for (String key: this.prototypes.keySet()) {
-            double distance = this.calcDistance(pattern, this.prototypes.get(key));
+            double distance = this.calcDistance(input.getValue(), this.prototypes.get(key));
             if (distance < min) {
                 min = distance;
                 minKey = key;
             }
         }
-        return new StringResult(minKey);
-    }
-
-    public Map<String,Dimension<Double>> getPrototypes() {
-        return this.prototypes;
+        return new SimpleOutput(minKey, input.getKey());
     }
 
     private double calcDistance(Dimension<Double> a, Dimension<Double> b) {
@@ -81,7 +78,7 @@ public class NearestNeighbor extends AbstractRecognition<Double>{
         double res = 0;
         for (int i=0; i<a.getWidth(); i++) {
             for (int j=0; j<a.getHeight(); j++) {
-                res += Math.pow(a.getValue(i, j) - b.getValue(i, j), 2);
+                res += Math.pow(a.getDoubleValue(i, j) - b.getDoubleValue(i, j), 2);
             }
         }
         return Math.sqrt(res);

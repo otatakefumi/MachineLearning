@@ -12,7 +12,7 @@ public class Dimension<T extends Number> {
     /**
      * actual data for this dimension
      */
-    protected Object[][] data;
+    protected Number[][] data;
 
     /**
      * constructor
@@ -28,7 +28,7 @@ public class Dimension<T extends Number> {
         }
         this.width = width;
         this.height = height;
-        this.data = new Object[height][width];
+        this.data = new Number[height][width];
         for (int i=0; i<height; i++) {
             for (int j=0; j<width; j++) {
                 this.data[i][j] = 0;
@@ -42,9 +42,12 @@ public class Dimension<T extends Number> {
      * @param y y-axis of value
      * @return value of this dimension(type: T)
      */
-    @SuppressWarnings("unchecked")
-    public T getValue(int x, int y) {
-        return (T)this.data[y][x];
+    public Number getValue(int x, int y) {
+        return this.data[y][x];
+    }
+
+    public double getDoubleValue(int x, int y) {
+        return this.data[y][x].doubleValue();
     }
 
     /**
