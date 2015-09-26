@@ -1,8 +1,5 @@
 package me.retty.recognition.base.modules.output;
 
-import me.retty.recognition.base.Result;
-import me.retty.recognition.base.modules.input.AbstractInput;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
