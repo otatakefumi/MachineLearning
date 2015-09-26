@@ -8,18 +8,18 @@ import javafx.util.Pair;
 public interface IInput<T> {
     /**
      * get next data
-     * @return
+     * @return input data
      */
-    public Pair<String, T> get();
+    Pair<String, T> get();
 
     /**
      * judge whether having next data or not
-     * @return
+     * @return true / false
      */
-    public boolean hasNext();
+    boolean hasNext();
 
     /**
      * reset index of data
      */
-    public void reset();
+    void reset();
 }
