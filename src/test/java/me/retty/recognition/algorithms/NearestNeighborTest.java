@@ -112,16 +112,16 @@ public class NearestNeighborTest {
 
     @Test
     public void testStartLearning() throws Exception {
-        NearestNeighbor nn = new NearestNeighbor();
+        //NearestNeighbor nn = new NearestNeighbor();
     }
 
     @Test
     public void testExec() throws Exception {
-        NearestNeighbor nn = new NearestNeighbor();
+        //NearestNeighbor nn = new NearestNeighbor();
     }
 
     @Test
     public void testGetPrototypes() throws Exception {
-        NearestNeighbor nn = new NearestNeighbor();
+        //NearestNeighbor nn = new NearestNeighbor();
     }
 }

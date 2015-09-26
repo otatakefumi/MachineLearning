@@ -38,7 +38,7 @@ public class NearestNeighbor extends AbstractRecognition<Double>{
                     System.out.println(path);
                     for (int i = 0; i < height; i++) {
                         for (int j = 0; j < width; j++) {
-                            prototype.setData(j, i, prototype.getDoubleValue(j, i) + dim.getDoubleValue(j, i));
+                            prototype.setData(j, i, prototype.getValue(j, i) + dim.getValue(j, i));
                         }
                     }
                     count[0]++;
@@ -81,7 +81,7 @@ public class NearestNeighbor extends AbstractRecognition<Double>{
         double res = 0;
         for (int i=0; i<a.getWidth(); i++) {
             for (int j=0; j<a.getHeight(); j++) {
-                res += Math.pow(a.getDoubleValue(i, j) - b.getDoubleValue(i, j), 2);
+                res += Math.pow(a.getValue(i, j) - b.getValue(i, j), 2);
             }
         }
         return Math.sqrt(res);

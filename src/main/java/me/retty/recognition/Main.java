@@ -1,4 +1,4 @@
-package me.retty.recognition.image;
+package me.retty.recognition;
 
 import me.retty.recognition.algorithms.NearestNeighbor;
 import me.retty.recognition.base.DimensionReader;

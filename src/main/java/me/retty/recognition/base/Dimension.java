@@ -48,17 +48,6 @@ public class Dimension<T extends Number> {
     }
 
     /**
-     * get double type value of this dimension
-     * @param x x-axis of value
-     * @param y y-axis of value
-     * @return value of this dimension(type: T)
-     */
-    @SuppressWarnings("unchecked")
-    public double getDoubleValue(int x, int y) {
-        return this.getValue(x, y).doubleValue();
-    }
-
-    /**
      * set value on this dimension
      * @param x x-axis you wanna set value
      * @param y y-axis you wanna set value
