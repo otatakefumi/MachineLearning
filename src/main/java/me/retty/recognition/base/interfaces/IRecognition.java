@@ -13,7 +13,7 @@ import java.util.Map;
 public interface IRecognition<T extends Number> {
     /**
      * start learning for recognition
-     * @param learningData list of learning data
+     * @param learningFiles list of learning data file path
      * @return own self(type: ? implements IRecognition)
      */
     public IRecognition startLearning(Map<String,List<String>> learningFiles);
