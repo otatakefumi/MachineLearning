@@ -1,7 +1,7 @@
 package me.retty.recognition.base.modules.algorithm;
 
 import javafx.util.Pair;
-import me.retty.recognition.base.Config;
+import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.modules.input.IInput;
 import me.retty.recognition.base.modules.output.IOutput;
 import me.retty.recognition.base.modules.output.Results;
