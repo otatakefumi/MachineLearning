@@ -1,5 +1,6 @@
 package me.retty.recognition;
 
+import me.retty.recognition.algorithms.ExtendedNearestNeighbor;
 import me.retty.recognition.algorithms.NearestNeighbor;
 import me.retty.recognition.base.Config;
 
@@ -11,7 +12,8 @@ public class Main {
 //    public static int HEIGHT = 300;
 
     public static void main(String[] args) {
-        NearestNeighbor nn = new NearestNeighbor();
+        //NearestNeighbor nn = new NearestNeighbor(null);
+        ExtendedNearestNeighbor nn = new ExtendedNearestNeighbor(new Config().set("prototype_length", 250));
 
         nn.learn(new Config().set("inputDirPath", DATA_BASE_DIR + LEARN_DATA_DIR));
         nn.verify(new Config().set("inputDirPath", DATA_BASE_DIR + TEST_DATA_DIR));
