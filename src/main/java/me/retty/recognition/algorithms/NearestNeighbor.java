@@ -1,6 +1,7 @@
 package me.retty.recognition.algorithms;
 
 import javafx.util.Pair;
+import me.retty.recognition.base.Config;
 import me.retty.recognition.base.Dimension;
 import me.retty.recognition.base.modules.algorithm.AbstractDimensionClassifyAlgorithm;
 import me.retty.recognition.base.modules.input.IInput;
@@ -16,7 +17,8 @@ import java.util.Map;
 public class NearestNeighbor extends AbstractDimensionClassifyAlgorithm {
     private Map<String, Dimension<Double>> prototypes;
 
-    public NearestNeighbor() {
+    public NearestNeighbor(Config config) {
+        super(config);
         this.prototypes = new HashMap<>();
     }
 

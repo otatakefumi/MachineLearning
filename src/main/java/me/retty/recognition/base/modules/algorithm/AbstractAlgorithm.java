@@ -10,6 +10,12 @@ import me.retty.recognition.base.modules.output.Results;
  * Created by takefumiota on 2015/09/27.
  */
 public abstract class AbstractAlgorithm<T, K> implements IAlgorithm<K> {
+    protected Config config;
+
+    public AbstractAlgorithm(Config config) {
+        this.config = config;
+    }
+
     @Override
     public IAlgorithm learn(Config config) {
         IInput<T> input = this.getInput(config);

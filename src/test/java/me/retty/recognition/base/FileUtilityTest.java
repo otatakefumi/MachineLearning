@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Created by takefumiota on 2015/09/25.
@@ -12,6 +13,7 @@ import junit.framework.TestCase;
 public class FileUtilityTest extends TestCase {
     String DATA_BASE_DIR = "src/test/data/dimension";
 
+    @Test
     public void testGetPatternFilePathMap() throws Exception {
         Optional<Map<String, List<String>>> patternFilePathMapOpt = FileUtility.getPatternFilePathMap(DATA_BASE_DIR);
         assertTrue(patternFilePathMapOpt.isPresent());
