@@ -6,9 +6,9 @@ import me.retty.recognition.base.Config;
 import me.retty.recognition.base.modules.algorithm.IAlgorithm;
 
 public class Main {
-    public static String DATA_BASE_DIR = "/Users/takefumiota/work/machine_learning/data/";
-    public static String LEARN_DATA_DIR = "learn_gray";
-    public static String TEST_DATA_DIR = "test_gray";
+    public static String DATA_BASE_DIR = "base dir name for recognition";
+    public static String LEARN_DATA_DIR = "learn data dir";
+    public static String TEST_DATA_DIR = "test data dir";
 
     public static void main(String[] args) {
         //NearestNeighbor nn = new NearestNeighbor(null);
