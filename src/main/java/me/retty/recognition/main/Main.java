@@ -14,7 +14,7 @@ public class Main {
         if (options.hasValue("-c")) {
             Config config = new Config(options.getOption("-c"));
             LEARN_DATA_DIR = config.getStringValue("LearningDataDirPath", LEARN_DATA_DIR);
-            LEARN_DATA_DIR = config.getStringValue("TestingDataDirPath", LEARN_DATA_DIR);
+            TEST_DATA_DIR = config.getStringValue("TestingDataDirPath", TEST_DATA_DIR);
         }
 
         //NearestNeighbor nn = new NearestNeighbor(null);
