@@ -1,7 +1,7 @@
 package me.retty.recognition.algorithms;
 
 import javafx.util.Pair;
-import me.retty.recognition.base.Config;
+import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.Dimension;
 import me.retty.recognition.base.modules.algorithm.AbstractDimensionClassifyAlgorithm;
 import me.retty.recognition.base.modules.input.IInput;
