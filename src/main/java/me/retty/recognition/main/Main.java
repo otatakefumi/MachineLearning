@@ -13,12 +13,18 @@ public class Main {
         Arguments options = Arguments.parse(args);
         if (options.hasValue("-c")) {
             Config config = new Config(options.getOption("-c"));
-            LEARN_DATA_DIR = config.getStringValue("LearningDataDirPath", LEARN_DATA_DIR);
-            TEST_DATA_DIR = config.getStringValue("TestingDataDirPath", TEST_DATA_DIR);
+            LEARN_DATA_DIR = config.getStringValue("learning_data_dir_path", LEARN_DATA_DIR);
+            TEST_DATA_DIR = config.getStringValue("testing_data_dir_path", TEST_DATA_DIR);
         }
 
-        //NearestNeighbor nn = new NearestNeighbor(null);
-        IAlgorithm algorithm = new ExtendedNearestNeighbor(new Config().set("prototype_length", 250));
+        Config learningConfig;
+        if (options.hasValue("-l")) {
+            learningConfig = new Config(options.getOption("-l"));
+        } else {
+            learningConfig = new Config();
+        }
+
+        IAlgorithm algorithm = new ExtendedNearestNeighbor(learningConfig);
 
         algorithm.learn(new Config().set("inputDirPath", LEARN_DATA_DIR));
         algorithm.verify(new Config().set("inputDirPath", TEST_DATA_DIR));
