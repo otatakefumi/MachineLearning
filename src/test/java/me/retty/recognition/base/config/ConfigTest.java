@@ -1,4 +1,4 @@
-package me.retty.recognition.base;
+package me.retty.recognition.base.config;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +16,13 @@ public class ConfigTest {
         this.config = new Config().set("test", "testValue")
                 .set("int_test", 1)
                 .set("double_test", 1.2d);
+    }
+
+    @Test
+    public void testLoadConfig() throws Exception {
+        Config conf = new Config("./src/test/data/config/MainConfigTestData.yml");
+        assertEquals(conf.getStringValue("LearningDataDirPath", ""), "test/data/dir/path");
+        assertNull(conf.getStringValue("TestingDataDirPath", null));
     }
 
     @Test

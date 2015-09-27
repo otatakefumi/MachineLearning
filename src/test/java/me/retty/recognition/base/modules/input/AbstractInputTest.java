@@ -1,6 +1,6 @@
 package me.retty.recognition.base.modules.input;
 
-import me.retty.recognition.base.Config;
+import me.retty.recognition.base.config.Config;
 import org.junit.Before;
 import org.junit.Test;
 

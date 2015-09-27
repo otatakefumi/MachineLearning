@@ -1,11 +1,9 @@
 package me.retty.recognition.base.modules.input;
 
-import me.retty.recognition.base.Config;
+import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.Dimension;
 import me.retty.recognition.base.DimensionReader;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Optional;
 
 /**

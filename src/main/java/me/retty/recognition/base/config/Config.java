@@ -1,5 +1,10 @@
-package me.retty.recognition.base;
+package me.retty.recognition.base.config;
 
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +16,20 @@ public class Config {
 
     public Config() {
         this.data = new HashMap<>();
+    }
+
+    @SuppressWarnings("unchecked")
+    public Config(String configPath) {
+        this();
+        Yaml yaml = new Yaml();
+        try (FileReader reader = new FileReader(new File(configPath))) {
+            Map<String, Object> map = (Map<String, Object>) yaml.load(reader);
+            for (String key: map.keySet()) {
+                this.set(key, map.get(key));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Config set(String key, Object value) {

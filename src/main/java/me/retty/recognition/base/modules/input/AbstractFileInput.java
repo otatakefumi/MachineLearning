@@ -1,7 +1,7 @@
 package me.retty.recognition.base.modules.input;
 
 import javafx.util.Pair;
-import me.retty.recognition.base.Config;
+import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.FileUtility;
 
 import java.util.ArrayList;
