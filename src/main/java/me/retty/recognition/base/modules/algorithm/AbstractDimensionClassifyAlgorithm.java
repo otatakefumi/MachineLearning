@@ -9,6 +9,10 @@ import me.retty.recognition.base.modules.input.IInput;
  * Created by takefumiota on 2015/09/27.
  */
 public abstract class AbstractDimensionClassifyAlgorithm extends AbstractAlgorithm<Dimension<Double>, String> {
+    public AbstractDimensionClassifyAlgorithm(Config config) {
+        super(config);
+    }
+
     @Override
     protected IInput<Dimension<Double>> getInput(Config config) {
         return new DimensionInput(config);

@@ -19,8 +19,17 @@ public class Config {
     }
 
     public String getStringValue(String key, String defaultValue) {
+        System.out.println(this.data);
         if (data.containsKey(key)) {
             return this.data.get(key).toString();
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public int getIntValue(String key, int defaultValue) {
+        if (data.containsKey(key) && this.data.get(key) instanceof Number) {
+            return ((Number)this.data.get(key)).intValue();
         } else {
             return defaultValue;
         }
