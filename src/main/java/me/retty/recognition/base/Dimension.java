@@ -79,13 +79,23 @@ public class Dimension<T extends Number> {
     }
 
     public Dimension<T> serialize() {
-        Dimension<T> res = new Dimension<>(this.width * this.height, 1);
+        Number[][] ser = new Number[1][this.width * this.height];
         for (int i=0; i<this.height; i++) {
             for (int j=0; j<this.width; j++) {
-                res.data[0][j + (i * this.height)] = this.data[i][j];
+                ser[0][j + (i * this.height)] = this.data[i][j];
             }
         }
-        return res;
+        this.data = ser;
+        return this;
+    }
+
+    public Dimension<T> randomize() {
+        for (int i=0; i<this.height; i++) {
+            for (int j=0; j<this.width; j++) {
+                this.data[i][j] = (Math.random() * 2) - 1;
+            }
+        }
+        return this;
     }
 
     @Override

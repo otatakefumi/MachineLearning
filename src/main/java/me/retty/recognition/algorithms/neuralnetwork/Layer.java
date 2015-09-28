@@ -52,8 +52,7 @@ public class Layer extends Dimension<Double>{
             int height = this.getHeight();
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    this.weight[j][i] = new Dimension<Double>(width, height);
-                    System.out.println("  init layer (" + (j + (i * height)) + "/" + (width * height) + ")");
+                    this.weight[j][i] = new Dimension<Double>(width, height).randomize();
                 }
             }
         }
