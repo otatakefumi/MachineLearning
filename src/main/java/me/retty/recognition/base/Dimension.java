@@ -82,7 +82,7 @@ public class Dimension<T extends Number> {
         Dimension<T> res = new Dimension<>(this.width * this.height, 1);
         for (int i=0; i<this.height; i++) {
             for (int j=0; j<this.width; j++) {
-                res.data[1][j + (i * this.height)] = this.data[i][j];
+                res.data[0][j + (i * this.height)] = this.data[i][j];
             }
         }
         return res;

@@ -44,7 +44,7 @@ public class NeuralNetwork extends AbstractDimensionClassifyAlgorithm {
         // forward propagation
         while (input.hasNext()) {
             Pair<String, Dimension<Double>> data = input.get();
-            Dimension<Double> dim = data.getValue();
+            Dimension<Double> dim = data.getValue().serialize();
             for (Layer layer: this.layers) {
                 dim = layer.forward(dim);
             }
