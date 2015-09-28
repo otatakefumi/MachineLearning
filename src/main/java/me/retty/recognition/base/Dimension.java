@@ -78,6 +78,16 @@ public class Dimension<T extends Number> {
         return this.height;
     }
 
+    public Dimension<T> serialize() {
+        Dimension<T> res = new Dimension<>(this.width * this.height, 1);
+        for (int i=0; i<this.height; i++) {
+            for (int j=0; j<this.width; j++) {
+                res.data[1][j + (i * this.height)] = this.data[i][j];
+            }
+        }
+        return res;
+    }
+
     @Override
     public String toString() {
         String res = "Dimension (" + this.width + " x " + this.height + ") [\n";

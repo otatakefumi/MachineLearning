@@ -1,8 +1,10 @@
 package me.retty.recognition.main;
 
-import me.retty.recognition.algorithms.ExtendedNearestNeighbor;
+import me.retty.recognition.algorithms.nearestneighbor.ExtendedNearestNeighbor;
+import me.retty.recognition.algorithms.neuralnetwork.NeuralNetwork;
 import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.modules.algorithm.IAlgorithm;
+import org.yaml.snakeyaml.Yaml;
 
 public class Main {
 
@@ -24,7 +26,7 @@ public class Main {
             learningConfig = new Config();
         }
 
-        IAlgorithm algorithm = new ExtendedNearestNeighbor(learningConfig);
+        IAlgorithm algorithm = new NeuralNetwork(learningConfig);
 
         algorithm.learn(new Config().set("inputDirPath", LEARN_DATA_DIR));
         algorithm.verify(new Config().set("inputDirPath", TEST_DATA_DIR));

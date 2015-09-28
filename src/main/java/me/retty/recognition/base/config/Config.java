@@ -5,6 +5,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,10 @@ public class Config {
 
     public Config() {
         this.data = new HashMap<>();
+    }
+
+    private Config(Map<String, Object> data) {
+        this.data = data;
     }
 
     @SuppressWarnings("unchecked")
@@ -51,6 +56,22 @@ public class Config {
             return ((Number)this.data.get(key)).intValue();
         } else {
             return defaultValue;
+        }
+    }
+
+    public double getDoubleValue(String key, double defaultValue) {
+        if (this.data.containsKey(key) && this.data.get(key) instanceof Number) {
+            return ((Number)this.data.get(key)).doubleValue();
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public Object getObject(String key) {
+        if (this.data.containsKey(key)) {
+            return this.data.get(key);
+        } else {
+            return null;
         }
     }
 }

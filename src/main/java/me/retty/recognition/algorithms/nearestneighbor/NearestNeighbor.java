@@ -1,4 +1,4 @@
-package me.retty.recognition.algorithms;
+package me.retty.recognition.algorithms.nearestneighbor;
 
 import javafx.util.Pair;
 import me.retty.recognition.base.config.Config;

@@ -105,11 +105,11 @@ public class ImageConverter {
         String IMAGE_BASE_DIR = "/Users/takefumiota/work/machine_learning/data/";
         String LEARN_IMAGE_DIR = "learn";
         String TEST_IMAGE_DIR = "test";
-        int WIDTH = 300;
-        int HEIGHT = 300;
-        new ImageConverter(IMAGE_BASE_DIR + LEARN_IMAGE_DIR, IMAGE_BASE_DIR + LEARN_IMAGE_DIR + "_gray", true, WIDTH, HEIGHT)
+        int WIDTH = 22;
+        int HEIGHT = 22;
+        new ImageConverter(IMAGE_BASE_DIR + LEARN_IMAGE_DIR, IMAGE_BASE_DIR + LEARN_IMAGE_DIR + "_gray2", true, WIDTH, HEIGHT)
                 .exec();
-        new ImageConverter(IMAGE_BASE_DIR + TEST_IMAGE_DIR, IMAGE_BASE_DIR + TEST_IMAGE_DIR + "_gray", true, WIDTH, HEIGHT)
+        new ImageConverter(IMAGE_BASE_DIR + TEST_IMAGE_DIR, IMAGE_BASE_DIR + TEST_IMAGE_DIR + "_gray2", true, WIDTH, HEIGHT)
                 .exec();
     }
 }
