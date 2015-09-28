@@ -13,7 +13,7 @@ public class Layer extends Dimension<Double>{
 
     private Layer(int width, int height) {
         super(width, height);
-        this.weight = new Dimension[width][height];
+        this.weight = new Dimension[height][width];
         this.type = 1;
         this.activate = 0;
     }
@@ -52,7 +52,7 @@ public class Layer extends Dimension<Double>{
             int height = this.getHeight();
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    this.weight[j][i] = new Dimension<Double>(width, height).randomize();
+                    this.weight[i][j] = new Dimension<Double>(width, height).randomize();
                 }
             }
         }
@@ -67,7 +67,7 @@ public class Layer extends Dimension<Double>{
             Dimension<Double> res = new Dimension<>(this.getWidth(), this.getHeight());
             for (int i = 0; i < this.getHeight(); i++) {
                 for (int j = 0; j < this.getWidth(); j++) {
-                    res.setData(j, i, this.activate(this.calcH(this.weight[j][i], input)));
+                    res.setData(j, i, this.activate(this.calcH(this.weight[i][j], input)));
                 }
             }
             return res;
@@ -80,7 +80,7 @@ public class Layer extends Dimension<Double>{
         double res = 0;
         for (int i=0; i<height; i++) {
             for (int j=0; j<width; j++) {
-                res += weight.getDoubleValue(j, i) * input.getDoubleValue(j, i);
+                res += weight.getDoubleValue(j, i) * ((input.getDoubleValue(j, i) - 127.5) / 127.5);
             }
         }
         return res;

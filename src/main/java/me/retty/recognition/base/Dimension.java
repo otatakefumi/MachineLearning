@@ -86,6 +86,8 @@ public class Dimension<T extends Number> {
             }
         }
         this.data = ser;
+        this.width = this.width * this.height;
+        this.height = 1;
         return this;
     }
 
