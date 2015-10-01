@@ -22,16 +22,11 @@ public class NeuralNetwork extends AbstractDimensionClassifyAlgorithm {
         super(config);
         this.layers = new ArrayList<>();
         System.out.println("Start to prepare layers");
-        for (Object layerSetting: (List)config.getObject("layers")) {
-            Map layerSettingMap = (Map)layerSetting;
-            this.layers.add(
-                    new Layer(
-                            Integer.parseInt(layerSettingMap.get("dimension").toString()),
-                            1,
-                            layerSettingMap.get("type").toString(),
-                            layerSettingMap.get("activating").toString()
-                    )
-            );
+        List layerSettingList = (List)config.getObject("layers");
+        for (int i=1; i<layerSettingList.size(); i++) {
+            int inWidth = Integer.parseInt(((Map) layerSettingList.get(i - 1)).get("dimension").toString());
+            int outWidth = Integer.parseInt(((Map) layerSettingList.get(i)).get("dimension").toString());
+            this.layers.add(new Layer(inWidth, 1, outWidth, 1));
         }
         System.out.println("Finish to prepare layers");
         this.threshold = config.getDoubleValue("threshold", 0.04);
