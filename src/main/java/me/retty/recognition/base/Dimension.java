@@ -91,6 +91,15 @@ public class Dimension<T extends Number> {
         return this;
     }
 
+    public Dimension<T> multiply(double weight) {
+        for (int i=0; i<this.height; i++) {
+            for (int j=0; j<this.width; j++) {
+                this.data[i][j] = this.getDoubleValue(j, i) * weight;
+            }
+        }
+        return this;
+    }
+
     public Dimension<T> randomize() {
         for (int i=0; i<this.height; i++) {
             for (int j=0; j<this.width; j++) {
