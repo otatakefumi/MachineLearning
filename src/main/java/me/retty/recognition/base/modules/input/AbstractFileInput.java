@@ -5,6 +5,7 @@ import me.retty.recognition.base.FileUtility;
 import me.retty.recognition.base.config.Config;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public abstract class AbstractFileInput<T> extends AbstractInput<T>{
                 });
             }
         });
+        Collections.shuffle(dataFiles);
     }
 
     @Override

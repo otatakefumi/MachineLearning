@@ -50,6 +50,7 @@ public class NeuralNetwork extends AbstractDimensionClassifyAlgorithm {
         while (true) {
             Pair<String, Dimension<Double>> data = input.get();
             Dimension<Double> result = this.layers.get(0).forward(data.getValue().serialize().multiply(1d / 255));
+            System.out.println(result);
             int correctIndex = this.classes.indexOf(data.getKey());
             double diff = 0;
             for (int i=0; i<result.getWidth(); i++) {
@@ -59,7 +60,6 @@ public class NeuralNetwork extends AbstractDimensionClassifyAlgorithm {
                 diff += Math.pow(g - b, 2) / 2;
             }
             this.layers.get(this.layers.size() - 1).back(result);
-//            System.out.println(result);
             System.out.println("diff: " + diff);
             if (diff < 0.005) {
                 okCount++;
