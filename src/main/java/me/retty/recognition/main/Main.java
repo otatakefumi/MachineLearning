@@ -1,10 +1,8 @@
 package me.retty.recognition.main;
 
-import me.retty.recognition.algorithms.nearestneighbor.ExtendedNearestNeighbor;
 import me.retty.recognition.algorithms.neuralnetwork.NeuralNetwork;
 import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.modules.algorithm.IAlgorithm;
-import org.yaml.snakeyaml.Yaml;
 
 public class Main {
 

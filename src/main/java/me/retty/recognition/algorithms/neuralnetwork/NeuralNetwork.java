@@ -1,9 +1,5 @@
 package me.retty.recognition.algorithms.neuralnetwork;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-
 import javafx.util.Pair;
 import me.retty.recognition.base.Dimension;
 import me.retty.recognition.base.config.Config;
@@ -11,39 +7,69 @@ import me.retty.recognition.base.modules.algorithm.AbstractDimensionClassifyAlgo
 import me.retty.recognition.base.modules.input.IInput;
 import me.retty.recognition.base.modules.output.IOutput;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
- * Created by takefumiota on 2015/09/28.
+ * Created by takefumiota on 2015/10/09.
  */
 public class NeuralNetwork extends AbstractDimensionClassifyAlgorithm {
-    List<Layer> layers;
-    double threshold;
+    List<SimpleLayer> layers;
+    List<String> classes;
 
     public NeuralNetwork(Config config) {
         super(config);
         this.layers = new ArrayList<>();
-        System.out.println("Start to prepare layers");
-        List layerSettingList = (List)config.getObject("layers");
-        for (int i=1; i<layerSettingList.size(); i++) {
-            int inWidth = Integer.parseInt(((Map) layerSettingList.get(i - 1)).get("dimension").toString());
-            int outWidth = Integer.parseInt(((Map) layerSettingList.get(i)).get("dimension").toString());
-            this.layers.add(new Layer(inWidth, 1, outWidth, 1));
+        List layersInfo = (List) config.getObject("layers");
+        //create layer and set parent layer
+        SimpleLayer parent = null;
+        for (int i = 0; i < layersInfo.size(); i++) {
+            Map info = (Map) layersInfo.get(i);
+            int outWidth = Integer.parseInt(info.get("dimension").toString());
+            int inWidth = i == 0 ? outWidth : parent.getOutWidth();
+            System.out.println(inWidth + ":" + outWidth);
+            SimpleLayer layer = new SimpleLayer(inWidth, outWidth).setParent(parent);
+            this.layers.add(layer);
+            parent = layer;
         }
-        System.out.println("Finish to prepare layers");
-        this.threshold = config.getDoubleValue("threshold", 0.04);
+        // set child layer
+        for (int i = this.layers.size() - 2; i >= 0; i--) {
+            this.layers.get(i).setChild(this.layers.get(i + 1));
+        }
+
+        this.classes = new ArrayList<>();
+        ((List<Object>) config.getObject("classes")).forEach(obj -> {
+            this.classes.add(obj.toString());
+        });
     }
 
     @Override
     protected void doLearn(IInput<Dimension<Double>> input) {
-        //input.reset();
-
-        // forward propagation
-        while (input.hasNext()) {
+        int okCount = 0;
+        while (true) {
             Pair<String, Dimension<Double>> data = input.get();
-            Dimension<Double> dim = data.getValue().serialize().multiply(1d / 255);
-            for (Layer layer: this.layers) {
-                dim = layer.forward(dim);
+            Dimension<Double> result = this.layers.get(0).forward(data.getValue().serialize().multiply(1d / 255));
+            int correctIndex = this.classes.indexOf(data.getKey());
+            double diff = 0;
+            for (int i=0; i<result.getWidth(); i++) {
+                double b = i == correctIndex ? 1 : 0;
+                double g = result.getDoubleValue(i, 0);
+                result.setData(i, 0, (g - b) * g * (1 - g));
+                diff += Math.pow(g - b, 2) / 2;
             }
-            System.out.println(dim);
+            this.layers.get(this.layers.size() - 1).back(result);
+//            System.out.println(result);
+            System.out.println("diff: " + diff);
+            if (diff < 0.005) {
+                okCount++;
+            }
+            if(!input.hasNext()) {
+                if (okCount == input.count()) {
+                    break;
+                }
+                input.reset();
+            }
         }
     }
 

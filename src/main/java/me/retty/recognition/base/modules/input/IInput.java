@@ -22,4 +22,6 @@ public interface IInput<T> {
      * reset index of data
      */
     void reset();
+
+    int count();
 }

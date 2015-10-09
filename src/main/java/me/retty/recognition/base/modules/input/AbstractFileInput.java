@@ -1,8 +1,8 @@
 package me.retty.recognition.base.modules.input;
 
 import javafx.util.Pair;
-import me.retty.recognition.base.config.Config;
 import me.retty.recognition.base.FileUtility;
+import me.retty.recognition.base.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +38,9 @@ public abstract class AbstractFileInput<T> extends AbstractInput<T>{
     }
 
     protected abstract T loadData(String dataFilePath);
+
+    @Override
+    public int count() {
+        return this.dataFiles.size();
+    }
 }
